@@ -28,8 +28,8 @@ public class ClienteServiceImpl implements ClienteService<Cliente> {
 
     @Override
     public Cliente findById(Integer id) throws Exception {
-        try {
 
+        try {
             Optional<Cliente> personaOptional= clienteRepository.findById(id);
             return personaOptional.get();
 
@@ -40,8 +40,8 @@ public class ClienteServiceImpl implements ClienteService<Cliente> {
 
     @Override
     public Cliente save(Cliente entity) throws Exception {
-        try {
 
+        try {
             entity = clienteRepository.save(entity);
             return entity;
         } catch (Exception e){

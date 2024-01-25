@@ -1,6 +1,12 @@
 package com.example.ecommerce.service;
 
-public interface ProductoService {
+import java.util.List;
 
+public interface ProductoService<E> {
 
+    List<E> findAll() throws Exception;
+    E findById(Integer id) throws Exception;
+    E save(E entity) throws Exception;
+    E update(Integer id, E entity) throws Exception;
+    boolean delete(Integer id) throws Exception;
 }
