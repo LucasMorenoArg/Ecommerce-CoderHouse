@@ -1,8 +1,7 @@
 package com.example.ecommerce.controllers;
 
-import com.example.ecommerce.entities.Cliente;
+
 import com.example.ecommerce.entities.Producto;
-import com.example.ecommerce.service.impl.ClienteServiceImpl;
 import com.example.ecommerce.service.impl.ProductoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,8 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "*")
-@RequestMapping//(path="/producto")
+@RequestMapping(path="/producto")
 public class ProductoController {
 
     @Autowired

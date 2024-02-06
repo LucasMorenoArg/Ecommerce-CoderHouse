@@ -20,7 +20,7 @@ public class Producto implements Serializable {
     private Integer idProducto;
     private String descripcion;
     private Double precio;
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name ="venta" )
-    private Venta venta;
+    //ManyToOne(cascade = CascadeType.PERSIST)
+    //@JoinColumn(name ="venta" )
+    //private Venta venta;
 }

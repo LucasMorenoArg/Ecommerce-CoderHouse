@@ -23,9 +23,9 @@ public class Cliente implements Serializable {
     private String nombre;
     private String apellido;
     private String email;
-    @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "venta")
-    private List<Venta> list;
+//    @OneToMany(cascade = CascadeType.PERSIST)
+//    @JoinColumn(name = "venta")
+//    private List<Venta> list;
 
 
 
