@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -48,13 +50,15 @@ public class ComprobanteServiceImpl implements ComprobanteService {
 
        try {
            RestTemplate restTemplate = new RestTemplate();
-           String url = "http://worldclockapi.com/api/json/utc/now";
+           String url = "http://worldclockapi.com/api/json/utc/no";
            Map<String, String> mapa = restTemplate.getForObject(url, Map.class);
            comprobante.setFechaComprobante(mapa.get("currentDateTime"));
 
-           if (mapa.isEmpty()) {
+
+           if (mapa.get("currentDateTime")==null) {
                LocalDate localDate = LocalDate.now();
-               comprobante.setFechaComprobante(localDate.atStartOfDay().toString());
+               comprobante.setFechaComprobante(localDate.toString());
+
            }
        }catch (Exception e){
            throw new Exception(e.getMessage());
@@ -68,7 +72,6 @@ public class ComprobanteServiceImpl implements ComprobanteService {
             Optional<Producto> prod= productoService.byId(comprobante.getProducto().getId());
             Long precioProd;
             if (prod.isPresent() && prod.get().getStock()>=comprobante.getCantidad()){
-                System.out.println(1+1);
                 prod.get().setStock(prod.get().getStock()-comprobante.getCantidad());
                 productoService.save(prod.get());
                 precioProd=prod.get().getPrecio();
@@ -90,6 +93,27 @@ public class ComprobanteServiceImpl implements ComprobanteService {
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         }
+    }
+
+    @Override
+    public String totalProductosVendidos() throws Exception {
+
+        try {
+            List<Comprobante> lista= comprobanteRepository.findAll();
+            int parcial;
+            int total=0;
+            String mensaje= "Total de Articulos vendidos";
+            for (Comprobante comprobante : lista) {
+
+                parcial= comprobante.getCantidad();
+                total+=parcial;
+            }
+            return mensaje + " " + total;
+
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+
     }
 
     @Override

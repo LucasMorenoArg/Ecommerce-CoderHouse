@@ -23,6 +23,18 @@ public class ComprobanteController {
     private ProductoServiceImpl productoService;
 
 
+    @GetMapping("/prodTotales")
+    public ResponseEntity<?> prodtotales() throws Exception {
+
+        try {
+            return  ResponseEntity.status(HttpStatus.OK).
+                    body(comprobanteService.totalProductosVendidos());
+
+        } catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).
+                    body("{\"error\":\"Error.No se encontró registro.\"}");
+        }
+    }
     @GetMapping("/getAll")
     public ResponseEntity<?> getAll(){
         try {

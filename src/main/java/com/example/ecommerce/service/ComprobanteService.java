@@ -12,6 +12,7 @@ public interface ComprobanteService {
     void horaComprobante(Comprobante comprobante) throws Exception;
     boolean StockAndPrecioTotal(Comprobante comprobante)throws Exception;
     Comprobante save(Comprobante comprobante)throws Exception;
+    String totalProductosVendidos()throws Exception;
     Optional<Comprobante> update (Comprobante comprobante, Long id)throws Exception;
     boolean delete(Long id)throws Exception;
 
