@@ -10,16 +10,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ClienteServiceImpl implements ClienteService<Cliente> {
+public class ClienteServiceImpl implements ClienteService {
 
     @Autowired
     private ClienteRepository clienteRepository;
 
+
     @Override
-    public List<Cliente> findAll() throws Exception {
+    public List<Cliente> getAll() throws Exception {
         try {
-            List<Cliente> entities = clienteRepository.findAll();
-            return entities;
+            return clienteRepository.findAll();
         } catch (Exception e){
             throw new Exception(e.getMessage() +
                     " "+ e.getCause());
@@ -27,42 +27,39 @@ public class ClienteServiceImpl implements ClienteService<Cliente> {
     }
 
     @Override
-    public Cliente findById(Integer id) throws Exception {
-
+    public Optional<Cliente> ById(Long id) throws Exception {
         try {
-            Optional<Cliente> personaOptional= clienteRepository.findById(id);
-            return personaOptional.get();
-
+            return clienteRepository.findById(id);
         } catch (Exception e){
             throw new Exception(e.getMessage());
         }
     }
 
     @Override
-    public Cliente save(Cliente entity) throws Exception {
+    public Cliente save(Cliente cliente) throws Exception {
 
         try {
-            entity = clienteRepository.save(entity);
-            return entity;
+            return clienteRepository.save(cliente);
         } catch (Exception e){
             throw new Exception(e.getMessage());
         }
     }
 
     @Override
-    public Cliente update(Integer id, Cliente entity) throws Exception {
+    public Optional<Cliente> update(Cliente cliente, Long id) throws Exception {
 
         try {
-            Optional<Cliente> personaOptional=clienteRepository.findById(id);
-            Cliente cliente = personaOptional.get();
-            return cliente = clienteRepository.save(entity);
+            if (clienteRepository.existsById(id)){
+                clienteRepository.save(cliente);
+            } else System.out.println("No se pudo completar la operación");
+
+            return clienteRepository.findById(id);
         } catch (Exception e){
             throw new Exception(e.getMessage());
         }
     }
-
     @Override
-    public boolean delete(Integer id) throws Exception {
+    public boolean delete(Long id) throws Exception {
         try {
             if (clienteRepository.existsById(id)){
                 clienteRepository.deleteById(id);

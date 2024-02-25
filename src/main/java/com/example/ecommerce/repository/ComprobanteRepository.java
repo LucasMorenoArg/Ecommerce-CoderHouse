@@ -1,9 +1,9 @@
 package com.example.ecommerce.repository;
 
-import com.example.ecommerce.entities.Producto;
+import com.example.ecommerce.entities.Comprobante;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ProductoRepository extends JpaRepository<Producto,Long> {
+public interface ComprobanteRepository extends JpaRepository<Comprobante, Long> {
 }

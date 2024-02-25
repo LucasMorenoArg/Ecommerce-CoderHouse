@@ -1,17 +1,24 @@
 package com.example.ecommerce.controllers;
 
 
+import com.example.ecommerce.entities.Comprobante;
 import com.example.ecommerce.entities.Producto;
+import com.example.ecommerce.service.impl.ClienteServiceImpl;
+import com.example.ecommerce.service.impl.ComprobanteServiceImpl;
 import com.example.ecommerce.service.impl.ProductoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping(path="/producto")
-public class ProductoController {
+import java.util.Optional;
 
+@RestController
+@RequestMapping("/comprobante")
+public class ComprobanteController {
+
+    @Autowired
+    private ComprobanteServiceImpl comprobanteService;
     @Autowired
     private ProductoServiceImpl productoService;
 
@@ -20,18 +27,18 @@ public class ProductoController {
     public ResponseEntity<?> getAll(){
         try {
             return  ResponseEntity.status(HttpStatus.OK).
-                    body(productoService.getAll());
+                    body(comprobanteService.getAll());
 
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).
                     body("{\"error\":\"Error.No se encontró registro.\"}");
         }
     }
-    @GetMapping("/getId/{id}")
+    @GetMapping("/byId/{id}")
     public ResponseEntity<?> getOne(@PathVariable Long id){
         try {
             return  ResponseEntity.status(HttpStatus.OK).
-                    body(productoService.byId(id));
+                    body(comprobanteService.byId(id));
 
         } catch (Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).
@@ -39,21 +46,28 @@ public class ProductoController {
         }
     }
 
-    @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody Producto entity){
+    @PostMapping("/comprar")
+    public ResponseEntity<?> save(@RequestBody Comprobante comprobante) {
         try {
-            return  ResponseEntity.status(HttpStatus.OK).
-                    body(productoService.save(entity));
-        } catch (Exception e){
+
+            if(comprobanteService.StockAndPrecioTotal(comprobante)){
+               comprobanteService.horaComprobante(comprobante);
+
+                return ResponseEntity.status(HttpStatus.OK).
+                        body(comprobanteService.save(comprobante));}
+
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).
                     body("{\"error\":\"Error.Por favor intente mas tarde\"}");
         }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).
+                body("{\"error\":\"Stock insuficiente\"}");
     }
 
-    @PutMapping("/updateId")
-    public ResponseEntity<?> update(@RequestBody Producto  producto){
+    @PutMapping("/updateId/{id}")
+    public ResponseEntity<?> update(@RequestBody Comprobante comprobante, @PathVariable Long id){
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(productoService.update(producto));
+            return ResponseEntity.status(HttpStatus.OK).body(comprobanteService.update(comprobante,id));
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("{\"error\":\"Error.Por favor intente mas tarde\"}");
@@ -63,10 +77,11 @@ public class ProductoController {
     @DeleteMapping("/deleteId/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id) {
         try {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(productoService.delete(id));
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(comprobanteService.delete(id));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("{\"error\":\"Error.Por favor intente mas tarde\"}");
         }
+
     }
 }

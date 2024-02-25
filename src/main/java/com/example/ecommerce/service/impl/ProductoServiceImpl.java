@@ -1,6 +1,5 @@
 package com.example.ecommerce.service.impl;
 
-import com.example.ecommerce.entities.Cliente;
 import com.example.ecommerce.entities.Producto;
 import com.example.ecommerce.repository.ProductoRepository;
 import com.example.ecommerce.service.ProductoService;
@@ -11,12 +10,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProductoServiceImpl implements ProductoService<Producto> {
+public class ProductoServiceImpl implements ProductoService {
 
     @Autowired
     private ProductoRepository productoRepository;
+
     @Override
-    public List<Producto> findAll() throws Exception {
+    public List<Producto> getAll() throws Exception {
         try {
             return productoRepository.findAll();
         } catch (Exception e){
@@ -26,11 +26,22 @@ public class ProductoServiceImpl implements ProductoService<Producto> {
     }
 
     @Override
-    public Producto findById(Integer id) throws Exception {
+    public Optional<Producto> byId(Long id) throws Exception {
+        try {
+
+            return productoRepository.findById(id);
+
+        } catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
+    }
+
+
+    @Override
+    public Producto save(Producto producto) throws Exception {
 
         try {
-            Optional<Producto> personaOptional= productoRepository.findById(id);
-            return personaOptional.get();
+            return productoRepository.save(producto);
 
         } catch (Exception e){
             throw new Exception(e.getMessage());
@@ -38,30 +49,22 @@ public class ProductoServiceImpl implements ProductoService<Producto> {
     }
 
     @Override
-    public Producto save(Producto entity) throws Exception {
-
+    public Optional<Producto> update(Producto producto) throws Exception {
         try {
-            entity = productoRepository.save(entity);
-            return entity;
+
+            if (productoRepository.existsById(producto.getId())){
+                productoRepository.save(producto);
+
+            } else System.out.println("No se pudo completar la operación");
+
+            return productoRepository.findById(producto.getId());
         } catch (Exception e){
             throw new Exception(e.getMessage());
         }
     }
 
     @Override
-    public Producto update(Integer id, Producto entity) throws Exception {
-
-        try {
-            Optional<Producto> personaOptional = productoRepository.findById(id);
-            Producto cliente = personaOptional.get();
-            return cliente = productoRepository.save(entity);
-        } catch (Exception e){
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    @Override
-    public boolean delete(Integer id) throws Exception {
+    public boolean delete(Long id) throws Exception {
 
         try {
             if (productoRepository.existsById(id)){

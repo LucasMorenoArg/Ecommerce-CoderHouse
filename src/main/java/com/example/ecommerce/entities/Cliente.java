@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
-@Table(name="cliente")
+@Table(name="clientes")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -19,14 +19,9 @@ public class Cliente implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+
+    private Long id;
     private String nombre;
     private String apellido;
-    private String email;
-//    @OneToMany(cascade = CascadeType.PERSIST)
-//    @JoinColumn(name = "venta")
-//    private List<Venta> list;
-
-
 
 }
