@@ -50,7 +50,7 @@ public class ComprobanteServiceImpl implements ComprobanteService {
 
        try {
            RestTemplate restTemplate = new RestTemplate();
-           String url = "http://worldclockapi.com/api/json/utc/no";
+           String url = "http://worldclockapi.com/api/json/utc/now";
            Map<String, String> mapa = restTemplate.getForObject(url, Map.class);
            comprobante.setFechaComprobante(mapa.get("currentDateTime"));
 

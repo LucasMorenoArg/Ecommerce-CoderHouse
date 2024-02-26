@@ -22,6 +22,4 @@ public class Producto implements Serializable {
     private String descripcion;
     private Long precio;
     private int stock;
-
-
 }
