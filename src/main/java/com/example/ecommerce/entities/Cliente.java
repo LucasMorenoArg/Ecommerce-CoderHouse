@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.processing.SQL;
+import org.springframework.boot.autoconfigure.sql.init.SqlInitializationAutoConfiguration;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,6 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+
+
 public class Cliente implements Serializable {
 
     @Id
