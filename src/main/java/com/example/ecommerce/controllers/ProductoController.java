@@ -27,7 +27,7 @@ public class ProductoController {
                     body("{\"error\":\"Error.No se encontró registro.\"}");
         }
     }
-    @GetMapping("/getId/{id}")
+    @GetMapping("/byId/{id}")
     public ResponseEntity<?> getOne(@PathVariable Long id){
         try {
             return  ResponseEntity.status(HttpStatus.OK).

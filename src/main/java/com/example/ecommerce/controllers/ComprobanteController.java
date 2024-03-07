@@ -23,7 +23,7 @@ public class ComprobanteController {
     private ProductoServiceImpl productoService;
 
 
-    @GetMapping("/prodTotales")
+    @GetMapping("/prodTotales/Vendidos")
     public ResponseEntity<?> prodtotales() throws Exception {
 
         try {
