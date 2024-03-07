@@ -51,6 +51,10 @@ Producto
  PutMapping   http://localhost:8080/producto/updateId
  DeleteMapping  http://localhost:8080/producto/deleteId/{id}
 
+Info adicional:
+Para la informacion de hora y fecha se usó api externa: http://worldclockapi.com/api/json/utc/now con restTemplate.
+Ruta para acceder desde Swagger: http://localhost:8080/swagger-ui/index.html#/
+Para cargar tablas y datos usar los scrips de los archivos de data.sql y schema.sql de forma manual ya que no se hacen de manera automatica.
  
  
  
